@@ -23,4 +23,4 @@ else:
     asc_list.append(ascend)
     des_list.append(descend)
 
-    print(max(max(asc_list), max(des_list)))
+    print(max(asc_list + des_list))
