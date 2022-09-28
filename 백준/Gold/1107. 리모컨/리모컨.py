@@ -1,20 +1,19 @@
-from itertools import product
-
+channel = int(input())
 n = int(input())
-m = int(input())
-max_move = abs(n - 100)
+button = set(map(str, range(10)))
 
-button = set(map(str, range(0, 10)))
-if m != 0:
-    button = button - set(list(input().split()))
+if n:
+    button -= set(input().split())
+press = abs(channel-100)
 
-length = len(str(n))
-moves = []
-for i in range(1, length + 2):
-    for move in product(button, repeat=i):
-        m = abs(int(''.join(move)) - n)
-        moves.append(m + i)
-if len(moves) > 0:
-    print(min(max_move, min(moves)))
-else:
-    print(max_move)
+for i in range(press):
+    down = set(str(channel - i))
+    if button.intersection(down) == down:
+        press = min(press,i + len(str(channel-i)))
+        break
+    up = set(str(channel + i))
+    if button.intersection(up) == up:
+        press = min(press, i + len(str(channel+i)))
+        break
+        
+print(press)
