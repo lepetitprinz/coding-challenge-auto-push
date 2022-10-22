@@ -1,7 +1,16 @@
 from itertools import product
 
+def backtrack(data, m):
+    sorted_data = sorted(data)
+    result = product(sorted_data, repeat = m)
+    
+    return result
+
 n, m = map(int, input().split())
-nums = sorted(list(set(map(int, input().split()))))
-cases = product(nums, repeat=m)
-for case in cases:
-    print(*case)
+data = list(map(int, input().split()))
+result = backtrack(data, m)
+
+for row in result:
+    print(*row)
+
+print(*result, sep='\n')
