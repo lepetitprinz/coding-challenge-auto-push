@@ -6,5 +6,6 @@ for i in range(9):
         if max_num <= num:
             max_num = num
             loc = [i+1, j+1]
+            
 print(max_num)
 print(*loc)
