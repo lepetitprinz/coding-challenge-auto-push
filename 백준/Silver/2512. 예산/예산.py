@@ -1,37 +1,36 @@
-def calc_budget(start, end, res, overs, best):
+def binary_search(start, end, target):
     if start > end:
-        return best
-    mid = (start+end)//2
-    over = []
-    under = 0
-    total = 0
-    for budget in overs:
-        if budget <= mid:
-            under += budget
-            total += budget
+        return start - 1
+    
+    mid = (start + end) // 2
+    money = calc_budget(mid)
+    if money > target:
+        return binary_search(start, mid - 1, target)
+    elif money == target:
+        return mid
+    else:
+        return binary_search(mid + 1, end, target)
+    
+def calc_budget(line):
+    money = 0
+    for i, budget in enumerate(budgets):
+        if budget <= line:
+            money += budget
         else:
-            over.append(budget)
-            total += mid
-    if total <= res:
-        if best <= mid:
-            best = calc_budget(mid+1, end, res-under, over, mid)
-    else:
-        best = calc_budget(start, mid-1, res, overs, best)
-    return best
-
+            money += line * (n - i)
+            break
+    
+    return money
+    
+    
 n = int(input())
-budgets = list(map(int, input().split()))
-total = int(input())
-avg = total // n
-max_budget = avg
-under = 0
-over = []
-for budget in budgets:
-    if budget <= avg:
-        under += budget
-    else:
-        over.append(budget)
-        
-res = total - under
-best = calc_budget(avg, max(budgets), res, over, avg)
-print(best)
+budgets = sorted(list(map(int, input().split())))
+threshold = int(input())
+
+result = 0
+if sum(budgets) <= threshold:
+    result = budgets[-1]
+else:
+    result = binary_search(0, budgets[-1], threshold)
+
+print(result)
